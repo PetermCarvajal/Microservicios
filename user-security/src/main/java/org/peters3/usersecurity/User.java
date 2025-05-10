@@ -3,8 +3,10 @@ package org.peters3.usersecurity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "users")
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Data
@@ -14,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String firstname;
     private String lastname;
@@ -22,7 +25,4 @@ public class User {
     private String direccion;
     private String password;
 
-    public User() {
-
-    }
 }

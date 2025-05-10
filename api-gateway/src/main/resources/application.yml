@@ -25,7 +25,7 @@ spring:
         - id: user-security
           uri: http://localhost:8085
           predicates:
-            - Path=/user/**
+            - Path=/auth/**
 
 logging:
   level:
@@ -33,5 +33,5 @@ logging:
     reactor.netty: INFO
 
 jwt:
-  secret: mysecretkeymysecretkeymysecretkeymysecretkey
+  secret: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
   expiration: 3600000

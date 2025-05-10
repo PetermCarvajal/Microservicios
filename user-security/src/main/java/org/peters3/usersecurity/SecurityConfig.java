@@ -6,12 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -35,20 +38,16 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    //@Bean
-    //public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
-    //    http
-    //        .csrf(csrf -> csrf.disable())
-    //        .authorizeHttpRequests(auth -> auth
-    //            //.requestMatchers("/auth/register", "/auth/login").permitAll()
-    //            // Cambia la línea de abajo temporalmente:
-    //            // .anyRequest().authenticated() // <-- Línea original
-    //            .requestMatchers("/auth/admin/**").permitAll()
-    //            .anyRequest().authenticated() // < -- Mueve esta línea al final si agregas la anterior
-    //        )
-    //        .addFilterBefore(new JwtFilter(authManager, new JwtUtil(), userDetailsService()),
-    //                         UsernamePasswordAuthenticationFilter.class);
-//
-    //    return http.build();
-    //}
+     @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/register", "/auth/login").permitAll()
+                .anyRequest().authenticated()
+            );
+        return http.build();
+    }
 }
