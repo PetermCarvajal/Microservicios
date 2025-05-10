@@ -1,27 +1,37 @@
 server:
-  port: 8080
+  port: 8079
 
 spring:
+  main:
+    web-application-type: servlet
   application:
     name: api-gateway
-cloud:
-  gateway:
-    routes:
-      - id: producto-service
-        uri: http://localhost:8084
-        predicates:
-          - Path=/producto/**
 
-      - id: taxonomia-service
-        uri: http://localhost:8082
-        predicates:
-          - Path=/taxonomia/**
+  cloud:
+    gateway:
+      routes:
+        - id: producto-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/producto/**
+        - id: taxonomia-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/taxonomia/**
+        - id: js-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/test/**
+        - id: user-security
+          uri: http://localhost:8085
+          predicates:
+            - Path=/user/**
 
-      - id: js-service
-        uri: http://localhost:8083
-        predicates:
-          - Path=/test
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty: INFO
+
+jwt:
+  secret: mysecretkeymysecretkeymysecretkeymysecretkey
+  expiration: 3600000
