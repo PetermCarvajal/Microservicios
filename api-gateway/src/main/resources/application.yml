@@ -1,26 +1,27 @@
 server:
   port: 8080
-
 spring:
   application:
     name: api-gateway
-cloud:
-  gateway:
-    routes:
-      - id: producto-service
-        uri: http://localhost:8084
-        predicates:
-          - Path=/producto/**
-
-      - id: taxonomia-service
-        uri: http://localhost:8082
-        predicates:
-          - Path=/taxonomia/**
-
-      - id: js-service
-        uri: http://localhost:8083
-        predicates:
-          - Path=/test
+  cloud:
+    gateway:
+      routes:
+        - id: producto-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/producto/**
+        - id: taxonomia-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/taxonomia/**
+        - id: js-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/test
+        - id: Authenticacion
+          uri: http://localhost:8085
+          predicates:
+            - Path=/auth/**
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

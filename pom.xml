@@ -18,6 +18,7 @@
         <module>producto-service</module>
         <module>api-gateway</module>
         <module>js-service</module>
+        <module>Authenticacion</module>
     </modules>
     <properties>
         <java.version>23</java.version>
